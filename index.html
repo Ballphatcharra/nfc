@@ -1,135 +1,255 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Payment</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --accent-color: #00f2fe;
+            --success-color: #00e676;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
 
-<title>ชำระเงิน</title>
+        * {
+            box-sizing: border-box;
+            font-family: 'Kanit', sans-serif;
+        }
 
-<style>
-  body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
+        body {
+            margin: 0;
+            padding: 0;
+            background: #0f172a; /* พื้นหลังเข้มแบบ Deep Space */
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(102, 126, 234, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(118, 75, 162, 0.15) 0px, transparent 50%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
 
-  .card {
-    background: rgba(255,255,255,0.08);
-    backdrop-filter: blur(20px);
-    padding: 30px;
-    border-radius: 20px;
-    text-align: center;
-    width: 300px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-  }
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            padding: 40px 30px;
+            border-radius: 28px;
+            text-align: center;
+            width: 100%;
+            max-width: 380px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease;
+        }
 
-  h1 {
-    margin-bottom: 10px;
-  }
+        .card:hover {
+            transform: translateY(-5px);
+        }
 
-  input {
-    width: 100%;
-    padding: 15px;
-    font-size: 24px;
-    text-align: center;
-    border-radius: 12px;
-    border: none;
-    outline: none;
-    margin-top: 20px;
-  }
+        .icon-box {
+            font-size: 50px;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
+        }
 
-  .quick {
-    margin-top: 15px;
-  }
+        h1 {
+            margin: 0;
+            font-weight: 600;
+            letter-spacing: 1px;
+            font-size: 28px;
+        }
 
-  .quick button {
-    margin: 5px;
-    padding: 10px 15px;
-    border-radius: 10px;
-    border: none;
-    background: rgba(255,255,255,0.2);
-    color: white;
-    font-size: 16px;
-  }
+        p {
+            opacity: 0.7;
+            font-weight: 300;
+            margin-top: 5px;
+        }
 
-  .pay-btn {
-    margin-top: 20px;
-    width: 100%;
-    padding: 15px;
-    font-size: 20px;
-    border: none;
-    border-radius: 12px;
-    background: gray;
-    color: white;
-    transition: 0.2s;
-  }
+        .input-group {
+            position: relative;
+            margin-top: 30px;
+        }
 
-  .active {
-    background: #00e676 !important;
-  }
-</style>
+        input {
+            width: 100%;
+            padding: 15px;
+            font-size: 32px;
+            font-weight: 600;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.2);
+            border: 2px solid var(--glass-border);
+            border-radius: 16px;
+            color: white;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        /* เอาลูกศรขึ้นลงของ input number ออก */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .currency-label {
+            display: block;
+            margin-top: 8px;
+            font-size: 14px;
+            color: var(--accent-color);
+            font-weight: 500;
+        }
+
+        .quick-select {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+            gap: 10px;
+        }
+
+        .quick-select button {
+            flex: 1;
+            padding: 12px 5px;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .quick-select button:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: white;
+        }
+
+        .quick-select button:active {
+            transform: scale(0.95);
+        }
+
+        .pay-btn {
+            margin-top: 30px;
+            width: 100%;
+            padding: 18px;
+            font-size: 20px;
+            font-weight: 600;
+            border: none;
+            border-radius: 16px;
+            background: #475569; /* สีเทาเข้มเมื่อปิดใช้งาน */
+            color: rgba(255, 255, 255, 0.5);
+            cursor: not-allowed;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .pay-btn.active {
+            background: var(--primary-gradient);
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 10px 20px -5px rgba(102, 126, 234, 0.5);
+        }
+
+        .pay-btn.active:hover {
+            transform: scale(1.02);
+            filter: brightness(1.1);
+        }
+
+        .pay-btn.active:active {
+            transform: scale(0.98);
+        }
+
+        .footer-note {
+            font-size: 12px;
+            margin-top: 20px;
+            opacity: 0.4;
+        }
+    </style>
 </head>
 
 <body>
 
 <div class="card">
-  <h1>💸 ชำระเงิน</h1>
-  <p>ใส่จำนวนเงิน</p>
+    <div class="icon-box">💎</div>
+    <h1>ชำระเงิน</h1>
+    <p>ระบุจำนวนเงินที่ต้องการจ่าย</p>
 
-  <input type="number" id="amount" placeholder="0" oninput="check()">
+    <div class="input-group">
+        <input type="number" id="amount" placeholder="0.00" oninput="check()" autocomplete="off">
+        <span class="currency-label">บาท (THB)</span>
+    </div>
 
-  <div class="quick">
-    <button onclick="setAmt(20)">20</button>
-    <button onclick="setAmt(50)">50</button>
-    <button onclick="setAmt(100)">100</button>
-  </div>
+    <div class="quick-select">
+        <button onclick="setAmt(20)">฿20</button>
+        <button onclick="setAmt(50)">฿50</button>
+        <button onclick="setAmt(100)">฿100</button>
+        <button onclick="setAmt(500)">฿500</button>
+    </div>
 
-  <button id="payBtn" class="pay-btn" onclick="pay()" disabled>
-    ยืนยัน
-  </button>
+    <button id="payBtn" class="pay-btn" onclick="pay()" disabled>
+        ยืนยันการชำระเงิน
+    </button>
+
+    <div class="footer-note">Secure Payment via PromptPay</div>
 </div>
 
 <script>
-function check(){
-  let amt = document.getElementById("amount").value;
-  let btn = document.getElementById("payBtn");
+    const amountInput = document.getElementById("amount");
+    const payBtn = document.getElementById("payBtn");
 
-  if(amt > 0){
-    btn.disabled = false;
-    btn.classList.add("active");
-  } else {
-    btn.disabled = true;
-    btn.classList.remove("active");
-  }
-}
-
-function setAmt(x){
-  document.getElementById("amount").value = x;
-  check();
-}
-
-function pay(){
-  let amt = document.getElementById("amount").value;
-
-  if(confirm("ยืนยันจ่าย " + amt + " บาท?")){
-    window.location.href = "https://promptpay.io/0960577791/" + amt;
-  }
-}
-
-// กด Enter = จ่าย
-document.addEventListener("keydown", function(e){
-  if(e.key === "Enter"){
-    let btn = document.getElementById("payBtn");
-    if(!btn.disabled){
-      pay();
+    function check() {
+        let amt = amountInput.value;
+        
+        if (amt > 0) {
+            payBtn.disabled = false;
+            payBtn.classList.add("active");
+        } else {
+            payBtn.disabled = true;
+            payBtn.classList.remove("active");
+        }
     }
-  }
-});
+
+    function setAmt(x) {
+        amountInput.value = x;
+        check();
+        // เพิ่มเอฟเฟกต์กระพริบที่ช่อง input เล็กน้อยเพื่อให้รู้ว่าค่าเปลี่ยนแล้ว
+        amountInput.style.transform = "scale(1.05)";
+        setTimeout(() => amountInput.style.transform = "scale(1)", 100);
+    }
+
+    function pay() {
+        let amt = amountInput.value;
+
+        if (amt < 1 || amt > 100000) {
+            alert("กรุณาระบุจำนวนเงินระหว่าง 1 - 100,000 บาท");
+            return;
+        }
+
+        // ใช้การยืนยันที่ดูดีขึ้น (ถึงแม้จะเป็น alert/confirm มาตรฐาน)
+        if (confirm(`ยืนยันการชำระเงินจำนวน ${Number(amt).toLocaleString()} บาท?`)) {
+            window.location.href = "https://promptpay.io/0960577791/" + amt;
+        }
+    }
+
+    // Support Enter Key
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" && !payBtn.disabled) {
+            pay();
+        }
+    });
+
+    // Auto focus
+    window.onload = () => amountInput.focus();
 </script>
 
 </body>
