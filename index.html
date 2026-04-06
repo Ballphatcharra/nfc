@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ชำระเงิน</title>
+
+<style>
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .card {
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(20px);
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    width: 300px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+  }
+
+  h1 {
+    margin-bottom: 10px;
+  }
+
+  input {
+    width: 100%;
+    padding: 15px;
+    font-size: 24px;
+    text-align: center;
+    border-radius: 12px;
+    border: none;
+    outline: none;
+    margin-top: 20px;
+  }
+
+  .quick {
+    margin-top: 15px;
+  }
+
+  .quick button {
+    margin: 5px;
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: none;
+    background: rgba(255,255,255,0.2);
+    color: white;
+    font-size: 16px;
+  }
+
+  .pay-btn {
+    margin-top: 20px;
+    width: 100%;
+    padding: 15px;
+    font-size: 20px;
+    border: none;
+    border-radius: 12px;
+    background: gray;
+    color: white;
+    transition: 0.2s;
+  }
+
+  .active {
+    background: #00e676 !important;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <h1>💸 ชำระเงิน</h1>
+  <p>ใส่จำนวนเงิน</p>
+
+  <input type="number" id="amount" placeholder="0" oninput="check()">
+
+  <div class="quick">
+    <button onclick="setAmt(20)">20</button>
+    <button onclick="setAmt(50)">50</button>
+    <button onclick="setAmt(100)">100</button>
+  </div>
+
+  <button id="payBtn" class="pay-btn" onclick="pay()" disabled>
+    ยืนยัน
+  </button>
+</div>
+
+<script>
+function check(){
+  let amt = document.getElementById("amount").value;
+  let btn = document.getElementById("payBtn");
+
+  if(amt > 0){
+    btn.disabled = false;
+    btn.classList.add("active");
+  } else {
+    btn.disabled = true;
+    btn.classList.remove("active");
+  }
+}
+
+function setAmt(x){
+  document.getElementById("amount").value = x;
+  check();
+}
+
+function pay(){
+  let amt = document.getElementById("amount").value;
+
+  if(confirm("ยืนยันจ่าย " + amt + " บาท?")){
+    window.location.href = "https://promptpay.io/0960577791/" + amt;
+  }
+}
+
+// กด Enter = จ่าย
+document.addEventListener("keydown", function(e){
+  if(e.key === "Enter"){
+    let btn = document.getElementById("payBtn");
+    if(!btn.disabled){
+      pay();
+    }
+  }
+});
+</script>
+
+</body>
+</html>
